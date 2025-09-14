@@ -1,3 +1,3 @@
 # javascript_func
 # text
-# hazifeladat
+# hazifeladat 09.14. pj
