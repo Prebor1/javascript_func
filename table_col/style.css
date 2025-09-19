@@ -1,5 +1,27 @@
 table,thead,tbody,th,td {
-    border: 1px, solid, rgb(192, 91, 223);
-
+    border: 1px, solid, black;
+    font-style: italic;
     border-collapse: collapse;
+    color: aliceblue;
+}
+
+thead, th {
+    background-color: rgb(170, 115, 221);
+}
+
+table thead ~ tbody > tr{
+    background-color: rgb(240, 36, 240);
+}
+
+table tbody > tr {
+    background-color: greenyellow;
+}
+tbody tr:nth-child(2n){
+
+    background-color: rgb(22, 131, 95);
+    
+}
+
+tbody tr:hover{
+    background-color: cadetblue;
 }
