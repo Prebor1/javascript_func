@@ -1,14 +1,63 @@
-table, tr, th, td, thead, tbody{
+table, tr, th, td, thead, tbody
+{
     border: 1px dotted red;
     border-collapse: collapse;
 }
 
-tr td:last-child{
+tr td:last-child
+{
     background-color: lightgreen;
 }
 
-tr td:nth-last-child(3){
+tr td:nth-last-child(3)
+{
 
     background-color: lightgreen;
+}
+
+#gyakorlas
+{
+    background-color: aquamarine;
+    color: red;
+}
+
+#gyakorlas button:has(+p)
+{
+    background-color: greenyellow;
+}
+
+#gyakorlas button:not(:has(+p))
+{
+    background-color: lightblue;
+}
+
+#gyakorlas:has(+ a:hover) button
+{
+    background-color: blueviolet;
+}
+
+tr:not(:has(td[rowspan])) + tr:not(:has(td[rowspan])):hover td
+{
+    background-color: crimson;
+}
+
+tbody tr:has(td[rowspan]):hover td
+{
+    background-color: darkgreen;
+}
+
+tbody tr:has(td[rowspan]):hover + tr td
+{
+    background-color: rgb(21, 177, 21);
+}
+
+tr:has(td[rowspan]):has(+ tr:hover) td
+{
+    background-color: darkorchid;
+}
+
+tr:has(td[rowspan]):has(+ tr:hover) + tr td
+{
+    background-color: blueviolet;
 }
 
