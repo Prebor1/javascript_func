@@ -1,0 +1,14 @@
+table, tr, th, td, thead, tbody{
+    border: 1px dotted red;
+    border-collapse: collapse;
+}
+
+tr td:last-child{
+    background-color: lightgreen;
+}
+
+tr td:nth-last-child(3){
+
+    background-color: lightgreen;
+}
+
