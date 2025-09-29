@@ -1,0 +1,78 @@
+table, tr, th, td, thead, tbody{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr td:last-child {
+    background-color: blueviolet; 
+}
+/*minden tr-ben (sorban) azon td-t (cellat) celozza,
+ amely a sorban az utolso gyerek (azaz a sor utolso cellaja)*/
+
+tr td:nth-last-child(3){
+    background-color: blueviolet; 
+}/*minden tr-ben azt azt a td-t celozza, amely az hatulrol/hatrafele (last child)
+ az n-edik (nth), azaz 3-adik (ez az ertek van megadva n-ediknek) gyerek*/
+
+tr:has(td[rowspan]):hover td{ 
+
+    background-color: blue;
+    font-weight: bold;
+    color: brown;
+}
+/*olyan tr-eket valaszt amelyek tartalmaznak (:has) egy td-t amiben
+szerepel rowspan attributum, azaz van-e a sorban olyan cella, ami tobb
+sorra nyulik. (ezert van megadva a rowspan attributum (html fajl) amugy is) 
+
+tr:has(...):hover td = amikor a fenti sor
+(azert fenti met a legfelso td-ben van mindig a rowspan attributum a html-ben)
+fole viszed az egeret, akkor az adott sor (tr) minden td-jet beallitja kek-re
+*/
+
+tr:has(td[rowspan]):hover + tr td{
+    background-color: blue;
+    font-weight: bold;
+    color: brown;
+}
+/*
+ertelmezes: valassz egy sort (tr) amelynek van [rowspan]-os cellaja/adatja (td)
+es az van :hover allapotban, ezutan a "+ tr td az azonnal 
+kovetkezo testver osszes td-jet celozza (kek hatterrel)"
+*/
+
+
+tr:has(td[rowspan]):has(+ tr:hover ) td{ 
+    background-color: blue;  
+    font-weight: bold;
+    color: brown;
+}
+/*
+ertelmezes: valassz egy sort (tr), amely tartalmaz egy rowspanos adatot (td) es rendelkezik
+olyan kozvetlen kovetkezo testverrel, amely most :hover allapotban van. Ha mindketto
+igaz, akkor a szabalyosan szereplo td-ket celozza (azaz az eredeti, rowspanos sort)
+*/
+
+tr:has(td:not([rowspan])):has(+tr:hover) + tr td{
+    background-color: blue;
+    font-weight: bold;
+    color: brown;
+}
+/*
+lebontva ertelmezes: 
+"tr:has(td:not([rowspan]))" - olyan sort (tr) valaszt, amely tartalmaz
+olyan td-t amin NINCS rowspan attributum (azaz van normal cellaja)
+
+":has(+tr:hover)" -  tovabb feltetelez, hogy ennek a tr-nek van kozvetlen kovetkezo testver,
+(tr), es az a testver eppen hover allapotban van.
+
+"+ tr td" - ez a kivalasztott tr-t a kovetkezo azonnal kovetkezo tr-re
+ (tehát "két lépésre" eredeti <tr>-től) és annak <td>-ire céloz.
+
+Osszefoglalva (chatgpt help) 
+
+Összefoglalva: ha van egy <tr> (A) amelynek van normál (not([rowspan]))
+cellája és A-nak a közvetlen következő testvérje (B) éppen hover állapotban van,
+akkor A-t követő (C) sor cellái (A + tr → C) lesznek kékítve.
+Ez egy kicsit összetett „előző sor függő” következő-sor stílusozás:
+ hover a középső soron → a rá következő sor(oka)t érintheti.
+*/
