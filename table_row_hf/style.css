@@ -68,7 +68,7 @@ olyan td-t amin NINCS rowspan attributum (azaz van normal cellaja)
 "+ tr td" - ez a kivalasztott tr-t a kovetkezo azonnal kovetkezo tr-re
  (tehát "két lépésre" eredeti <tr>-től) és annak <td>-ire céloz.
 
-Osszefoglalva (chatgpt help) 
+Osszefoglalva 
 
 Összefoglalva: ha van egy <tr> (A) amelynek van normál (not([rowspan]))
 cellája és A-nak a közvetlen következő testvérje (B) éppen hover állapotban van,
