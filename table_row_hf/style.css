@@ -27,6 +27,8 @@ sorra nyulik. (ezert van megadva a rowspan attributum (html fajl) amugy is)
 tr:has(...):hover td = amikor a fenti sor
 (azert fenti met a legfelso td-ben van mindig a rowspan attributum a html-ben)
 fole viszed az egeret, akkor az adott sor (tr) minden td-jet beallitja kek-re
+
+
 */
 
 tr:has(td[rowspan]):hover + tr td{
@@ -36,8 +38,14 @@ tr:has(td[rowspan]):hover + tr td{
 }
 /*
 ertelmezes: valassz egy sort (tr) amelynek van [rowspan]-os cellaja/adatja (td)
-es az van :hover allapotban, ezutan a "+ tr td az azonnal 
+es az van :hover allapotban, ezutan a "+ tr td" az azonnal 
 kovetkezo testver osszes td-jet celozza (kek hatterrel)"
+
+a tr ami kozvetlenul ezutan kovetkezik a testver, es abban az osszes td megvan jelolve !!!!!!!
+
+A + tr azt jelenti a CSS-ben, hogy azt a közvetlenül utána következő <tr> testvért válaszd ki. !!!!!!!!!!!
+
+A + tr td azt jelenti: az adott sor (tr) közvetlenül utána következő testvérsorának (tr) minden celláját (td) válaszd ki. !!!!!!!!!!!
 */
 
 
@@ -47,9 +55,8 @@ tr:has(td[rowspan]):has(+ tr:hover ) td{
     color: brown;
 }
 /*
-ertelmezes: valassz egy sort (tr), amely tartalmaz egy rowspanos adatot (td) es rendelkezik
-olyan kozvetlen kovetkezo testverrel, amely most :hover allapotban van. Ha mindketto
-igaz, akkor a szabalyosan szereplo td-ket celozza (azaz az eredeti, rowspanos sort)
+Ha ráviszed az egeret a rowspan-os sor UTÁNI sorra, akkor a
+rowspan-os sor cellái kékre váltanak, félkövérek lesznek és barna szöveget kapnak.
 */
 
 tr:has(td:not([rowspan])):has(+tr:hover) + tr td{
@@ -68,7 +75,7 @@ olyan td-t amin NINCS rowspan attributum (azaz van normal cellaja)
 "+ tr td" - ez a kivalasztott tr-t a kovetkezo azonnal kovetkezo tr-re
  (tehát "két lépésre" eredeti <tr>-től) és annak <td>-ire céloz.
 
-Osszefoglalva (chatgpt help) 
+Osszefoglalva 
 
 Összefoglalva: ha van egy <tr> (A) amelynek van normál (not([rowspan]))
 cellája és A-nak a közvetlen következő testvérje (B) éppen hover állapotban van,
