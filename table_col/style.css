@@ -9,7 +9,7 @@ thead, th {
     background-color: rgb(170, 115, 221);
 }
 
-table thead ~ tbody > tr{
+table thead ~ tbody tr{
     background-color: rgb(240, 36, 240);
 }
 
