@@ -39,6 +39,9 @@ az "appendChild" hozzáfűz egy HTML elemet valamihez, ez a valami ez esetben a 
 const thead = document.createElement('thead')
 table.appendChild(thead)
 
+const tbody = document.createElement('tbody')
+table.appendChild(tbody)
+
 //tr-t fuzzunk theadhez
 const tr = document.createElement('tr')
 thead.appendChild(tr)
@@ -54,34 +57,36 @@ const th3 = document.createElement('th')
 tr.appendChild(th3)
 
 th1.innerText = "Fizika területe"
-th3.colSpan = 2
+th2.innerText = "Időszak"
+th3.innerText = "Képviselők"
+th3.colSpan = "2" // th3-nak 2 oszlop lesz
 
-//1. tbody letrehozasa, hozzatenni tablehoz
-//2. vegigiterálunk a tömbön, és minden iterációban létrehozunk egy tr, hozzáadjuk a tbody-hoz
-// létrehozunk 3 td-t, innertext = element.theme
-// feltétel: scientist2 NEM = undifined --> látrehozunk ujabb td-t, 
-// egyébként beállítjuk a 3adik td colspanját 2-re
 
-const tbody = document.createElement('tbody')
-table.appendChild(tbody)
+for (const col of arr) 
+{
+    const tr1 = document.createElement('tr')
+    tbody.appendChild(tr1)
 
-for(const a of arr){
-    createElement('tr')
-}
 
-const td1 = document.createElement('td')
-tr.appendChild(td1)
+    const td1 = document.createElement("td")
+    tr1.appendChild(td1)
+    td1.innerText = col.theme
 
-const td2 = document.createElement('td')
-tr.appendChild(td2)
+    const td2 = document.createElement("td")
+    tr1.appendChild(td2)
+    td2.innerText = col.time
 
-const td3 = document.createElement('td')
-tr.appendChild(td3)
+    const td3 = document.createElement("td")
+    tr1.appendChild(td3)
+    td3.innerText = col.scientist1
 
-td1.innerText = element.theme
-td2.innerText = element.theme
-td3.innerText = element.theme
-
-if (!scientist2 == undefined){
-    createElement('td')
+    if (col.scientist2 != undefined)
+    {
+         const td4 = document.createElement("td")
+        tr1.appendChild(td4)
+        td4.innerText = col.scientist2
+    }
+    else{
+        td3.colSpan = "2"
+    }
 }
