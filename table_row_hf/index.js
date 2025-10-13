@@ -41,6 +41,10 @@ table.appendChild(thead)
 const tr = document.createElement("tr")
 thead.appendChild(tr)
 
+/**
+ * @type{string[]}
+ */
+
 const tomb = ["Harc megnevezése", "Szembenálló felek", "Haderő"]
 
 for(let a of tomb){

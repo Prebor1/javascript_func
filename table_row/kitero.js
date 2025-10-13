@@ -1,22 +1,30 @@
-const obj = {}
-let szam = 7
+let valtozo = "text";
+const obj = {};
+
+obj.ertek = 10;
+console.log(obj.ertek);
+
+let szam = 7;
 
 if (szam > 5){
-    obj.szam = "cucc"
+    obj["ujcucc"] = "cucc";
 }
 else{
-    obj["szam"] = "szam"
+    obj[valtozo] = "szovegszoveg";
 }
-console.log(obj)
+console.log(obj);
 
-/*
 let val = 6
-val == "6" // igaz
-val === "6" // hamis lesz, mert 3db "=" jel
+if (val == "6"){  // igaz
+    console.log('true')
+}
+if (val === "6"){ // hamis lesz, mert 3db "=" jel
+    console.log('false')
+}
 
 if (obj.age == null){ // igaz
 }
-*/
+
 
 if (obj.age === null){ // hamis | "===" csak akkor kell ha konkretan null van megadva (ebben a helyzetben legalabbis null) 
 }
