@@ -84,3 +84,16 @@ for (const col of tomb){
         td3.colSpan = "2" // ha nincs masodik szereto, akkor a harmadik td legyen 2 oszlopot egyesito
     }
 }
+
+/**
+ * 
+ * @param {string} cellType //th vagy td lesz-e létrehozva?
+ * @param {string} cellContent //cella tartalma
+ * @param {HTMLTableRowElement} cellRow //melyik sorhoz csatolunk
+ */
+function createCellElement(cellType, cellContent, cellRow) //fuggveny letrehoz egy tablazatcella elemet
+{
+    const a = document.createElement(cellType);
+    a.innerText = cellContent;
+    cellRow.appendChild(a);
+}
