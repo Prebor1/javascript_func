@@ -115,3 +115,48 @@ function createCellElement(cellType, cellContent, cellRow) //fuggveny letrehoz e
     cellRow.appendChild(a);
     return a;
 }
+
+//hazi
+const form = document.createElement("form");
+form.id = "form_js";
+document.body.appendChild(form);
+
+const h2 = document.createElement("h2");
+h2.innerText = "Javascript form";
+form.appendChild(h2);
+
+createForm("Költő neve:", "text", form);
+createForm("Korszak:", "text", form);
+createForm("Szerelme:", "text", form);
+createForm("Szerelme:", "text", form);
+// hoist hoist hoist hoist
+
+/**
+ * 
+ * @param {string} labelText a label szovege
+ * @param {string} inputType az input típusa
+ * @param {HTMLFormElement} parentForm a form elem (szulo)
+ * @returns {{label: HTMLLabelElement, input: HTMLInputElement}} visszahozza a letrehozott label es input elemeket
+ */
+
+function createForm(labelText, inputType, parentForm) {
+
+    const label = document.createElement("label");
+    label.innerText = labelText;
+    parentForm.appendChild(label);
+    
+    const input = document.createElement("input");
+    input.type = inputType;
+    parentForm.appendChild(input);
+
+    parentForm.appendChild(document.createElement("br"));
+    
+    return {label, input };
+}
+
+// A gomb
+const button = document.createElement("button");
+button.type = "submit";
+button.innerText = "Hozzáadás";
+form.appendChild(button);
+
