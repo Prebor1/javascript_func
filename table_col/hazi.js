@@ -1,4 +1,4 @@
-/**
+ /**
  * @type{{szerzonev:string, korszak:string, szereto1:string, szereto2:string}[]}
  */
 

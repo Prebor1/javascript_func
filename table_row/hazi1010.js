@@ -42,7 +42,7 @@ for(let elem of tomb){
     const th = document.createElement("th")
     tr.appendChild(th)
     th.innerText = elem
-}
+} 
 
 const tbody = document.createElement("tbody")
 table.appendChild(tbody)

@@ -78,10 +78,12 @@ for (const b of arr){
     if (b.team2 != undefined && b.team2Size != undefined){ //ennek benne kell lennie a for cikluson belül mert a "b" változót csak azon belül látja !!!!
 
         const tr2 = document.createElement("tr")
+
         const td4 = document.createElement("td")
         const td5 = document.createElement("td")
     
         tbody.appendChild(tr2)
+        
         tr2.appendChild(td4)
         tr2.appendChild(td5)
     
@@ -89,7 +91,6 @@ for (const b of arr){
         td5.innerText = b.team2Size
         td1.rowSpan = 2
     }
-    
 }
 /*
 //doga (jovohet pentek) 45 perc, no internet, nem szabad hireket olvasni, no w3schools, no AI

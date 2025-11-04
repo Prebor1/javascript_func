@@ -82,7 +82,7 @@ for (const col of arr)
 
     if (col.scientist2 != undefined)
     {
-         const td4 = document.createElement("td")
+        const td4 = document.createElement("td")
         tr1.appendChild(td4)
         td4.innerText = col.scientist2
     }
