@@ -54,6 +54,15 @@ for (const sor of arr){
 
     const td1 = document.createElement("td")
     tr1.appendChild(td1)
+    //11.07.
+    td1.addEventListener('click', function(e){
+        /**
+         * @type {HTMLTableCellElement}
+         */
+        const a = e.target
+        a.classList.add('market')
+    })
+    
         
     const td2 = document.createElement("td")
     tr1.appendChild(td2)

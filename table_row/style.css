@@ -62,3 +62,6 @@ tr:has(td[rowspan]):has(+ tr:hover) + tr td{
     background-color: rgba(160, 119, 170, 0.644);
 }
 
+.market{
+    color: red;
+}
