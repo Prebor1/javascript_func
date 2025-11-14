@@ -2,110 +2,11 @@
  * @typedef {{nemzetiseg:string, szerzo:string, mu:string, szerzo2:string, mu2:string}} CountryWriters 
  */
 
-
 /**
- * @type {{nemzetiseg:string, szerzo:string, mu:string, szerzo2:string, mu2:string}[]}
+ * @param {*} form 
+ * @param {*} Id 
+ * @param {*} LabelContent 
  */
-const arr = [
-    {
-        nemzetiseg: "Orosz",
-        szerzo: "Gogol",
-        mu1: "A köpönyeg",
-        szerzo2: "Csehov",
-        mu2: "A csinovnyik halála"
-    },
-    {
-        nemzetiseg: "Cseh",
-        szerzo: "Franz Kafka",
-        mu1: "Az átváltozás"
-    },
-    {
-        nemzetiseg: "Magyar",
-        szerzo: "Örkény István",
-        mu1: "Egyperces Novellák",
-        szerzo2: "József Attila",
-        mu2: "Klárisok"
-    },
- 
-    {
-         nemzetiseg: "Svájc",
-        szerzo: "Friedrich Dürrenmatt",
-        mu1: "A fizikusok"
-    }
-]
-
-const table = document.createElement("table")
-document.body.appendChild(table)
-
-const thead = document.createElement("thead")
-table.appendChild(thead)
-
-const tr = document.createElement("tr")
-thead.appendChild(tr)
-
-const tomb = ["Nemzetiség", "Szerző", "Mű"]
-
-for(let elem of tomb){
-
-    const th = document.createElement("th")
-    tr.appendChild(th)
-    th.innerText = elem
-} 
-
-const tbody = document.createElement("tbody")
-table.appendChild(tbody)
-
-for (const sor of arr){
-    
-    const tr1 = document.createElement("tr")
-    tbody.appendChild(tr1)
-
-    const td1 = document.createElement("td")
-    tr1.appendChild(td1)
-
-    //11.07.-től
-    td1.addEventListener('click', function(e){
-        /**
-         * @type {HTMLTableCellElement}
-         */
-        const a = e.target
-        a.classList.add('marked')
-    })
-    
-        
-    const td2 = document.createElement("td")
-    tr1.appendChild(td2)
-    
-    const td3 = document.createElement("td")
-    tr1.appendChild(td3)
-
-    td1.innerText = sor.nemzetiseg
-    td2.innerText = sor.szerzo;
-    td3.innerText = sor.mu1;
-
-    if (sor.mu2 != undefined && sor.szerzo2 != undefined){
-
-        const tr2 = document.createElement("tr")
-        tbody.appendChild(tr2)
-
-        const td4 = document.createElement("td")
-        tr2.appendChild(td4)
-        td4.innerText = sor.szerzo2
-
-        const td5 = document.createElement("td")
-        tr2.appendChild(td5)
-        td5.innerText = sor.mu2
-
-        td1.rowSpan = 2
-    }
-    
-}
-
-const azon = document.getElementById("htmlform")
-azon.addEventListener('submit', HTMLEventListener)
-
-const form1 = document.getElementById("jsform");
-document.body.appendChild(form);
 
 function createFormElement(form, Id, LabelContent){
     
@@ -120,10 +21,13 @@ function createFormElement(form, Id, LabelContent){
     input.type = 'text'
     
 }
-//ezt a form implementálást befejeznis !!
 
-
-//11.14.
+/**
+ * 
+ * @param {*} cellType 
+ * @param {*} cellContent 
+ * @param {*} parentRow 
+ */
 
 function createCell(cellType, cellContent, parentRow){ //6 helyre implementalni?
     //megcsinalja a cella celltype alapján
@@ -131,6 +35,12 @@ function createCell(cellType, cellContent, parentRow){ //6 helyre implementalni?
     //hozzáfűzni a parentrowhoz
     //visszatér cellával
 }
+
+/**
+ * 
+ * @param {*} table 
+ * @param {*} header 
+ */
 
 function generateHeader(table, header){
     //letrehoz theadet
@@ -141,9 +51,10 @@ function generateHeader(table, header){
 
 }
 
-//definialunk egy HTMLFORMEVENTLISTENER fuggvenyt
-//esemenykezelo fuggveny torzse copy
-//esemeny 2. parameteret lecserelni arra a fuggvenyre
+/**
+ * 
+ * @param {*} e 
+ */
 
 function HTMLEventListener(e){
      e.preventDefault() //alapértelmezett működést gátolja meg
