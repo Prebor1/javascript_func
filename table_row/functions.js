@@ -9,7 +9,10 @@
  */
 
 function createFormElement(form, Id, LabelContent){
-    
+
+    const div = document.createElement("div")
+    form.appendChild(div)
+
     const label = document.createElement("label")
     form.appendChild(label)
     label.innerText = LabelContent
@@ -20,6 +23,8 @@ function createFormElement(form, Id, LabelContent){
     input.id = Id
     input.type = 'text'
     
+    const span = document.createElement("span")
+    span.classList.add("error")
 }
 
 /**
@@ -150,4 +155,22 @@ function HTMLEventListener(e){
         td1.rowSpan = 2
     }
 
+}
+
+/**
+ * 
+ * @param {HTMLInputElement} inputfield1 
+ * @param {HTMLInputElement} inputfield2 
+ * @param {HTMLInputElement} inputfield3 
+ */
+function validateFields(inputfield1, inputfield2, inputfield3){
+
+    let valid = true
+    if (inputfield1.value == ""){
+        const parentDiv = inputfield1.parentElement
+        const err = parentDiv.querySelector(error)
+        err.innerText = 'Mező kitöltése kötelező'
+        valid = false
+    }
+    return valid
 }
