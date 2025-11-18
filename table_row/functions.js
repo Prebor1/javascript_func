@@ -2,67 +2,215 @@
  * @typedef {{nemzetiseg:string, szerzo:string, mu:string, szerzo2:string, mu2:string}} CountryWriters 
  */
 
+
 /**
- * @param {*} form 
- * @param {*} Id 
- * @param {*} LabelContent 
+ * @typedef {{id:string, label:string}} FormField
  */
 
-function createFormElement(form, Id, LabelContent){
 
-    const div = document.createElement("div")
-    form.appendChild(div)
+/**
+ * renderTableBody()-hoz tartozik
+ * a jsdoc-ot is nyilvan magunkkal hoztuk ide le
+ * @param {CountryWriters[]}
+ */
 
-    const label = document.createElement("label")
-    form.appendChild(label)
-    label.innerText = LabelContent
-    label.htmlFor = Id
+function renderTableBody(array){
+    const tablebody = document.getElementById('tablebody');
+    tablebody.innerHTML = "";
 
-    const input = document.createElement("input")
-    form.appendChild(input)
-    input.id = Id
-    input.type = 'text'
+    for (const sor of array){
     
+    const tr1 = document.createElement("tr");
+    tbody.appendChild(tr1);
+
+    const td1 = document.createElement("td");
+    tr1.appendChild(td1);
+
+    td1.addEventListener('click', function(e){
+        /**
+         * @type {HTMLTableCellElement}
+         */
+        const a = e.target
+        a.classList.add('marked')
+    })
+    
+    const td2 = document.createElement("td");
+    tr1.appendChild(td2);
+    
+    const td3 = document.createElement("td");
+    tr1.appendChild(td3);
+
+    td1.innerText = sor.nemzetiseg;
+    td2.innerText = sor.szerzo1;
+    td3.innerText = sor.mu1;
+
+    if (sor.mu2 != undefined && sor.szerzo2 != undefined){
+
+        const tr2 = document.createElement("tr");
+        tbody.appendChild(tr2);
+
+        const td4 = document.createElement("td");
+        tr2.appendChild(td4);
+        td4.innerText = sor.szerzo2;
+
+        const td5 = document.createElement("td");
+        tr2.appendChild(td5);
+        td5.innerText = sor.mu2;
+
+        td1.rowSpan = 2;
+    }
+}}
+
+//----------------------------------------------------------------------------
+
+/**
+ * createFormElement()-hez tartozik
+ * @param {string} form 
+ * @param {string} id 
+ * @param {string} labelContent 
+ * 
+ */
+
+function createFormElement(form, id, labelContent) {
+
+    const div = document.createElement("div");
+    form.appendChild(div);
+
+    const br0 = document.createElement("br")
+    //form.appendChild(br0)
+
+    const label = document.createElement("label");
+    label.innerText = labelContent;
+    label.htmlFor = id;
+    //jform.appendChild(label);
+
+    const br1 = document.createElement("br")
+    //form.appendChild(br1)
+    
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = id;
+    input.name = id;
+    //form.appendChild(input);
+
+    const br2 = document.createElement("br");
+    //form.appendChild(br2);
+
+    const br3 = document.createElement("br")
+    //form.appendChild(br3)
+
     const span = document.createElement("span")
     span.classList.add("error")
+
+    div.appendChild(label);
+    div.appendChild(br1);
+    div.appendChild(input);
+    div.appendChild(span);
+    div.appendChild(br2);
+    div.appendChild(br3);
 }
 
+//----------------------------------------------------------------------------
+
 /**
- * 
- * @param {*} cellType 
- * @param {*} cellContent 
- * @param {*} parentRow 
+ * renderTableRow()-hoz tartozik
+ * @param {HTMLTableSectionElement} tableBody 
+ * @param {CountryWriters} CountryWriters 
+ * A függvény a táblázat egy (dupla) sorának a kirendereléséért felel. 
+ * Ezt két helyen tudtuk használni: a htmles formunk eseménykezelőjében,
+ * illetve renderTableBody függvényben.
  */
 
-function createCell(cellType, cellContent, parentRow){ //6 helyre implementalni?
-    //megcsinalja a cella celltype alapján
-    //megcsinálja az innerTextjét
-    //hozzáfűzni a parentrowhoz
-    //visszatér cellával
+function renderTableRow(tableBody, CountryWriters) {
+
+    const tr = document.createElement("tr"); // egy sor letrehozasa
+    tableBody.appendChild(tr); // sor hozzáadása a tablazat torzsehez
+
+    const td1 = renderTableCell("td", CountryWriters.nemzetiseg, tr); // nemzetiseg cella
+    
+    td1.addEventListener("click", function(e){ 
+        /**
+         * @type {HTMLTableCellElement}
+         */
+
+        const esemeny = e.target; // ez a td elem, amire kattintottunk
+
+        const row = esemeny.parentElement; // a td szuloje a tr (sor) elem
+        const tbody = row.parentElement; // a tr szuloje a tbody (tablazat torzs) elem
+
+        const alreadyMarked = tbody.querySelector(".marked"); // megkeressuk, hogy van-e mar olyan elem, aminek a 'marked' osztalya van
+
+        if (alreadyMarked !== null) { // ha van ilyen elem (azaz nem null az ertek)...
+            alreadyMarked.classList.remove('marked'); // akkor eltavolitjuk rola a 'marked' osztalyt
+        }
+
+        esemeny.classList.add("marked"); 
+    });
+
+    renderTableCell("td", CountryWriters.szerzo1, tr); 
+    trenderTableCell("td", CountryWriters.mu1, tr);
+
+    // ha van masodik szerzo es mu, akkor keszitsunk egy ujabb sort
+    if (CountryWriters.szerzo2 && CountryWriters.mu2) {
+        const tr2 = document.createElement('tr');
+        tableBody.appendChild(tr2);
+
+        renderTableCell("td", CountryWriters.szerzo2, tr2);
+        renderTableCell("td", CountryWriters.mu2, tr2);
+
+        td1.rowSpan = 2;
+    }
 }
 
+//----------------------------------------------------------------------------
+
 /**
- * 
- * @param {*} table 
- * @param {*} header 
+ * renderTableCell()-hez tartozik, fuggveny a tablazatcellak (th (fejlec) es td (torzs)) letrehozasara
+ * @param {'th' | 'td'} cellType 
+ * @param {string} cellContent 
+ * @param {HTMLTableRowElement} parentRow 
+ * @returns {HTMLTableCellElement}
  */
+function renderTableCell(cellType, cellContent, parentRow) {
+    const cell = document.createElement(cellType);
+    cell.innerText = cellContent;
+    parentRow.appendChild(cell);
 
-function generateHeader(table, header){
-    //letrehoz theadet
-    //hozzácsatolja a table parameterhez
-    //létrehoz egy tablerrowt
-    //hozzácsatolja a tableheadhez
-    //végigiterál a második paraméteren és léthozza a cellát
-
+    return cell;
 }
+
+//----------------------------------------------------------------------------
 
 /**
  * 
- * @param {*} e 
+ * @param {string} formId 
+ * @param {Array[]} elemekTomb 
+ * @returns 
+ */
+function createForm(formId, elemekTomb) {
+    const form = document.createElement("form");
+    form.id = formId;
+
+    for (const elem of elemekTomb) {
+        createFormElement(form, elem.id, elem.label);
+    }
+
+    const gomb = document.createElement("button");
+    gomb.innerText = "Hozzáadás";
+    form.appendChild(gomb);
+
+    return form;
+}
+
+//----------------------------------------------------------------------------
+
+/**
+ * 
+ * @param {htmlSubmitEventListener} e 
  */
 
 function HTMLEventListener(e){
-     e.preventDefault() //alapértelmezett működést gátolja meg
+     e.preventDefault() // alapertelemzett mukodest meggatolja
     /**
      * @type {HTMLFormElement}
      */
@@ -92,85 +240,124 @@ function HTMLEventListener(e){
     /**
      * @type {string}
      */
-    const nemz = nemzetiseg.value;
+    const nemzetisegvalue = nemzetiseg.value;
      /**
      * @type {string}
      */
-    const szerz1 = szerzo1.value;
+    const szerzo1value = szerzo1.value;
      /**
      * @type {string}
      */
-    const szerz2 = szerzo2.value;
+    const szerzo2value = szerzo2.value;
      /**
      * @type {string}
      */
-    const muu1 = mu1.value
+    const mu1value = mu1.value;
      /**
      * @type {string}
      */
-    const muu2 = mu2.value
-
+    const mu2value = mu2.value;
 
     /**
      * @type {{nemzetiseg:string, szerzo:string, mu1:string, szerzo2:string, mu2:string}}
      */
     const obj = {}
-    obj.nemzetiseg = nemz
-    obj.szerzo = szerz1
-    obj.szerzo2 = szerz2
-    obj.mu1 = muu1
-    obj.mu2 = muu2
 
-    const tbody = document.getElementById("tbody_azon")
+    obj.nemzetiseg = nemzetisegvalue;
+    obj.szerzo1 = szerzo1value;
+    obj.mu1 = mu1value;
 
-    const tr1 = document.createElement("tr")
-    tbody.appendChild(tr1)
-
-    const td1 = document.createElement("td")
-    tr1.appendChild(td1)
-        
-    const td2 = document.createElement("td")
-    tr1.appendChild(td2)
-    
-    const td3 = document.createElement("td")
-    tr1.appendChild(td3)
-
-    td1.innerText = obj.nemzetiseg
-    td2.innerText = obj.szerzo1;
-    td3.innerText = obj.mu1;
-
-    if (obj.mu2 && obj.szerzo2){
-
-        const tr2 = document.createElement("tr")
-        tbody.appendChild(tr2)
-
-        const td4 = document.createElement("td")
-        tr2.appendChild(td4)
-        td4.innerText = obj.szerzo2
-
-        const td5 = document.createElement("td")
-        tr2.appendChild(td5)
-        td5.innerText = obj.mu2
-
-        td1.rowSpan = 2
+    if (szerzo2value && mu2value){
+        obj.szerzo2 = szerzo2value;
+        obj.mu2 = mu2value;
     }
 
+    if (validateFields(szerzo1, mu1, nemzetiseg) == false){
+        return;
+    }
+
+    const tbody = document.getElementById('tbody_azon');
+
+    renderTableRow(tbody, valami);
 }
 
-/**
- * 
- * @param {HTMLInputElement} inputfield1 
- * @param {HTMLInputElement} inputfield2 
- * @param {HTMLInputElement} inputfield3 
- */
-function validateFields(inputfield1, inputfield2, inputfield3){
+//----------------------------------------------------------------------------
 
-    let valid = true
-    if (inputfield1.value == ""){
-        const parentDiv = inputfield1.parentElement
-        const err = parentDiv.querySelector(error)
-        err.innerText = 'Mező kitöltése kötelező'
-        valid = false
+/**
+ * @param {string[]} headerList 
+ * @param {string} tbodyId 
+ * tablazatot generalunk osszessegeben
+ */
+function generateTable(headerArr, tbodyId) {
+    const table = document.createElement("table");
+    document.body.appendChild(table);
+
+    generateHeader(table, headerArr);
+
+    const tbody = document.createElement("tbody");
+    tbody.id = tbodyId;
+    table.appendChild(tbody);
+}
+
+//----------------------------------------------------------------------------
+
+/**
+ * validateField() (boolean ter vissza,) ha ures a mezo, akkor false es kiirja az errorMessage-t
+ * @param {HTMLInputElement} htmlInputField1
+ * @param {HTMLInputElement} htmlInputField2
+ * @param {HTMLInputElement} htmlInputField3
+ * @returns {boolean}
+ */
+
+function validateFields(htmlInputField1, htmlInputField2, htmlInputField3) {
+
+    //15.
+    const form = htmlInputField1.form; //  elerjuk a form elemet a bemeneti mezok egyikebol
+
+    const errors = form.querySelectorAll(".error"); // lekerjuk az osszes hiba uzenetet a formon belul
+    
+    for (const hiba of errors) {
+        hiba.innerText = ""; // for ciklussal vegigmegyunk az osszes hiba uzeneten es kitoroljuk a szoveget ("")
     }
-    return valid
+
+    let valid = true;
+
+    if (htmlInputField1.value == "") {
+
+        const div = htmlInputField1.parentElement;
+        const errormsg = div.querySelector(".error");
+        errormsg.innerText = "Ez a mező nem lehet üres!";
+        valid = false;
+    }
+
+    if (validateField(htmlInputField2, "Ez a mező nem lehet üres!") == false) {
+        valid = false;
+    }
+
+    if (validateField(htmlInputField3, "Ez a mező nem lehet üres!") == false) {
+        valid = false;
+    }
+
+    return valid;
+}
+
+//----------------------------------------------------------------------------
+
+/**
+ * @param {HTMLInputElement} htmlInputField 
+ * @param {string} errorMessage 
+ * @returns {boolean}
+ */
+function validateField(htmlInputField, errorMessage) {
+
+    valid = true;
+
+    if (htmlInputField.value == ""){
+        const div = htmlInputField.parentElement;
+        const errormsg = div.querySelector(".error");
+        errormsg.innerText = errorMessage;
+        valid = false;
+    }
+
+    return valid;
 }
