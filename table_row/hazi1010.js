@@ -2,6 +2,9 @@
  * @typedef {{nemzetiseg:string, szerzo1:string, mu:string, szerzo2?:string, mu2?:string}} CountryWriters
  */
 
+/**
+ * @typedef {{id:string, label:string}} FormField
+ */
 
 /**
  * @type {CountryWriters[]}
@@ -36,128 +39,45 @@ const arr = [
     }
 ]
 
-const table = document.createElement("table");
-document.body.appendChild(table);
+/**
+ * @type {{header:string, formFields:FormField[]}}
+ */
+const objektum = {
 
-const thead = document.createElement("thead");
-table.appendChild(thead);
+    header: ["Nemzetiség", "Szerző", "Mű"], //az eddigi header tomb bemasolva
 
-const tr = document.createElement("tr");
-thead.appendChild(tr);
+    formFields: [
+        {
+            id: "nemzetiseg", 
+            label: "Nemzetiség:"
+        },
+        {
+            id: "szerzo1", 
+            label: "Szerző:"
+        },
+        {
+            id: "mu1", 
+            label: "Mű:"
+        },
+        {
+            id: "szerzo2", 
+            label: "Másik szerző:"
+        },
+        {
+            id: "mu2", 
+            label: "Mű:"
+        },
+    ]
+}
 
-const tomb = ["Nemzetiség", "Szerző", "Mű"]
-
-for(let elem of tomb){
-
-    const th = document.createElement("th");
-    tr.appendChild(th);
-    th.innerText = elem;
-} 
-
-const tbody = document.createElement("tbody");
-table.appendChild(tbody);
-tbody.id = 'tablebody';
+generateTable(objektum.header, "tablebody"); //tablazat letrehozasa
 
 renderTableBody(arr); //megjeleniti a tablazat torzet
 
-const azon = document.getElementById("htmlform");
-azon.addEventListener('submit', function(e){
-    e.preventDefault() //alapertelemzett mukodest meggatolja
-    /**
-     * @type {HTMLFormElement}
-     */
-    const b = e.target //itt a target a htmlformelement
+const form = document.getElementById("htmlform");
+form.addEventListener('submit', HTMLEventListener)
 
-    /**
-     * @type {HTMLInputElement}
-     */
-    const nemzetiseg = b.querySelector('#nemzetiseg')
-    /**
-     * @type {HTMLInputElement}
-     */
-    const szerzo1 = b.querySelector('#szerzo1')
-    /**
-     * @type {HTMLInputElement}
-     */
-    const szerzo2 = b.querySelector('#szerzo2')
-    /**
-     * @type {HTMLInputElement}
-     */
-    const mu1 = b.querySelector('#mu1')
-    /**
-     * @type {HTMLInputElement}
-     */
-    const mu2 = b.querySelector('#mu2')
-
-    /**
-     * @type {string}
-     */
-    const nemzetisegvalue = nemzetiseg.value;
-     /**
-     * @type {string}
-     */
-    const szerzo1value = szerzo1.value;
-     /**
-     * @type {string}
-     */
-    const szerzo2value = szerzo2.value;
-     /**
-     * @type {string}
-     */
-    const mu1value = mu1.value
-     /**
-     * @type {string}
-     */
-    const mu2value = mu2.value
-
-    /**
-    * @type {CountryWriters[]}
-    */
-    const obj = {}
-    obj.nemzetiseg = nemzetisegvalue;
-    obj.szerzo1 = szerzo1value;
-    obj.mu1 = mu1value;
-
-    if (szerzo2value && mu2value){
-        obj.szerzo2 = szerzo2value;
-        obj.mu2 = mu2value;
-    }
-
-    const tbody = document.getElementById("tbody_azon");
-
-    const tr1 = document.createElement("tr");
-    tbody.appendChild(tr1);
-
-    const td1 = document.createElement("td");
-    tr1.appendChild(td1);
-        
-    const td2 = document.createElement("td");
-    tr1.appendChild(td2);
-    
-    const td3 = document.createElement("td");
-    tr1.appendChild(td3);
-
-    td1.innerText = obj.nemzetiseg;
-    td2.innerText = obj.szerzo1;
-    td3.innerText = obj.mu1;
-
-    if (obj.mu2 && obj.szerzo2){
-
-        const tr2 = document.createElement("tr");
-        tbody.appendChild(tr2);
-
-        const td4 = document.createElement("td");
-        tr2.appendChild(td4);
-        td4.innerText = obj.szerzo2;
-
-        const td5 = document.createElement("td");
-        tr2.appendChild(td5);
-        td5.innerText = obj.mu2;
-
-        td1.rowSpan = 2;
-    }
-
-})
+//Js-ben megcsinaljuka a formot (implmentaljuk)
 
 const jsForm = document.createElement('form');
 document.body.appendChild(jsForm);
@@ -225,8 +145,9 @@ jsForm.addEventListener("submit", function(e){
     obj.szerzo1 = szerzo1value;
     obj.mu1 = mu1value;
 
-    obj.szerzo2 = szerzo2value !== "" ? szerzo2value : undefined; // ha nem ures (undefined), akkor megkapja az erteket (value), ha ures, akkor undefined-ot dob
+    obj.szerzo2 = szerzo2value !== "" ? szerzo2value : undefined; 
     obj.mu2 = mu2value !== "" ? mu2value : undefined;
+
 
     arr.push(obj);
     renderTableBody(arr);

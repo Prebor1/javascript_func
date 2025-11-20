@@ -16,49 +16,10 @@
 
 function renderTableBody(array){
     const tablebody = document.getElementById('tablebody');
-    tablebody.innerHTML = "";
+    tablebody.innerHTML = ""; //nullazas
 
-    for (const sor of array){
-    
-    const tr1 = document.createElement("tr");
-    tbody.appendChild(tr1);
-
-    const td1 = document.createElement("td");
-    tr1.appendChild(td1);
-
-    td1.addEventListener('click', function(e){
-        /**
-         * @type {HTMLTableCellElement}
-         */
-        const a = e.target
-        a.classList.add('marked')
-    })
-    
-    const td2 = document.createElement("td");
-    tr1.appendChild(td2);
-    
-    const td3 = document.createElement("td");
-    tr1.appendChild(td3);
-
-    td1.innerText = sor.nemzetiseg;
-    td2.innerText = sor.szerzo1;
-    td3.innerText = sor.mu1;
-
-    if (sor.mu2 != undefined && sor.szerzo2 != undefined){
-
-        const tr2 = document.createElement("tr");
-        tbody.appendChild(tr2);
-
-        const td4 = document.createElement("td");
-        tr2.appendChild(td4);
-        td4.innerText = sor.szerzo2;
-
-        const td5 = document.createElement("td");
-        tr2.appendChild(td5);
-        td5.innerText = sor.mu2;
-
-        td1.rowSpan = 2;
-    }
+     for (let item of array) { // eddigi tablazatkreelo for ciklus
+        renderTableRow(tablebody, item);
 }}
 
 //----------------------------------------------------------------------------
@@ -148,7 +109,7 @@ function renderTableRow(tableBody, CountryWriters) {
     });
 
     renderTableCell("td", CountryWriters.szerzo1, tr); 
-    trenderTableCell("td", CountryWriters.mu1, tr);
+    renderTableCell("td", CountryWriters.mu1, tr);
 
     // ha van masodik szerzo es mu, akkor keszitsunk egy ujabb sort
     if (CountryWriters.szerzo2 && CountryWriters.mu2) {
@@ -278,7 +239,7 @@ function HTMLEventListener(e){
 
     const tbody = document.getElementById('tbody_azon');
 
-    renderTableRow(tbody, valami);
+    renderTableRow(tbody, obj);
 }
 
 //----------------------------------------------------------------------------
@@ -288,15 +249,17 @@ function HTMLEventListener(e){
  * @param {string} tbodyId 
  * tablazatot generalunk osszessegeben
  */
-function generateTable(headerArr, tbodyId) {
+function generateTable(headerList, tbodyId) {
+
     const table = document.createElement("table");
     document.body.appendChild(table);
 
-    generateHeader(table, headerArr);
+    generateHeader(table, headerList);
 
     const tbody = document.createElement("tbody");
     tbody.id = tbodyId;
     table.appendChild(tbody);
+
 }
 
 //----------------------------------------------------------------------------
@@ -350,7 +313,7 @@ function validateFields(htmlInputField1, htmlInputField2, htmlInputField3) {
  */
 function validateField(htmlInputField, errorMessage) {
 
-    valid = true;
+    let valid = true;
 
     if (htmlInputField.value == ""){
         const div = htmlInputField.parentElement;
@@ -360,4 +323,36 @@ function validateField(htmlInputField, errorMessage) {
     }
 
     return valid;
+}
+
+//----------------------------------------------------------------------------
+
+function generateHeader(table, headerList){
+    const thead = document.createElement('thead');
+    table.appendChild(thead);
+
+    const tableRow = document.createElement('tr');
+    thead.appendChild(tableRow);
+
+    for (const elem of headerList) {
+        const th = document.createElement('th');
+        tableRow.appendChild(th);
+        th.innerText = elem;
+    }
+
+}
+
+/**
+ * @param {'td' | 'th'} cellType 
+ * @param {string} cellContent 
+ * @param {HTMLTableRowElement} parentRow 
+ * @returns {HTMLTableCellElement}
+ */
+function createCell(cellType, cellContent, parentRow) {
+
+    const cella = document.createElement(cellType);
+    cella.innerText = cellContent;
+    parentRow.appendChild(cella);
+
+    return cella;
 }
